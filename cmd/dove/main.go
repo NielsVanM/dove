@@ -1,8 +1,10 @@
 package main
 
 import (
+	"fmt"
 	"log/slog"
 	"os"
+	"strings"
 
 	"github.com/nielsvanm/dove/commands"
 	"github.com/urfave/cli/v2"
@@ -42,6 +44,7 @@ const toolArt = `
 
 
 const (
+  DOVE_CFG_FILE_NAME = ".dovecfg"
   CLI_ERR_INVALID_ARGUMENT = 1
 )
 
@@ -79,14 +82,21 @@ func main() {
 				Action: func(ctx *cli.Context) error {
 					targetPath := ctx.Args().Get(0)
           if len(targetPath) == 0 {
-            return cli.Exit("Please provide a path to initialize, " , CLI_ERR_INVALID_ARGUMENT)
+            targetPath = "./" + DOVE_CFG_FILE_NAME
+          }
+
+
+          if !strings.HasSuffix(targetPath, DOVE_CFG_FILE_NAME) {
+            if !strings.HasSuffix(targetPath, "/")  {
+              targetPath += "/"
+            }
+            targetPath += DOVE_CFG_FILE_NAME
           }
 
           force := ctx.Bool("force")
+          fmt.Println(targetPath)
 
-          commands.InitConfigCommand(targetPath, force)
-
-          return nil
+          return commands.InitConfigCommand(targetPath, force)
 				},
 			},
 			{
