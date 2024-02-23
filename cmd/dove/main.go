@@ -82,7 +82,9 @@ func main() {
             return cli.Exit("Please provide a path to initialize, " , CLI_ERR_INVALID_ARGUMENT)
           }
 
-          commands.InitConfigCommand(targetPath)
+          force := ctx.Bool("force")
+
+          commands.InitConfigCommand(targetPath, force)
 
           return nil
 				},
