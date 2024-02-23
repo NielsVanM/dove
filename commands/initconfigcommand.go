@@ -3,6 +3,7 @@ package commands
 import (
 	_ "embed"
 	"errors"
+	"fmt"
 	"os"
 	"strings"
 )
@@ -34,6 +35,8 @@ func InitConfigCommand(targetpath string, force bool) error {
 	}
 
 	f.Write(initConfig)
+
+  fmt.Println("Written default config to " + f.Name())
 
 	return nil
 }
