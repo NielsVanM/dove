@@ -1,0 +1,6 @@
+[dove]
+
+
+[[service]]
+name="echo"
+command="echo Hello World"

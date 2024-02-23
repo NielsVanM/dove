@@ -1,0 +1,15 @@
+[dove]
+version=1
+
+
+[[service]]
+name="tailwindcss"
+command="tailwindcss --watch"
+
+[[service]]
+name="server"
+command="go run main.go"
+
+[[service]]
+name="frontend"
+command="npm start"
