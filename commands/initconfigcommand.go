@@ -11,7 +11,7 @@ var ErrConfigExists = errors.New("Config file already exists")
 var ErrConfigIsDirectory = errors.New("Config file is a directory")
 
 //go:embed init.toml
-var initConfig string
+var initConfig []byte 
 
 func InitConfigCommand(targetpath string, force bool) error {
 	if force {
@@ -33,7 +33,7 @@ func InitConfigCommand(targetpath string, force bool) error {
 		return err
 	}
 
-	f.Write([]byte(initConfig))
+	f.Write(initConfig)
 
 	return nil
 }
