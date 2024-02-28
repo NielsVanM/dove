@@ -1,3 +1,5 @@
+[![Run Tests](https://github.com/NielsVanM/dove/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/NielsVanM/dove/actions/workflows/tests.yml)
+
 # Dove
 Easily run multiple development processes at the same time!
 
