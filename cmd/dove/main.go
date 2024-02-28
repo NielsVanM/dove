@@ -1,10 +1,8 @@
 package main
 
 import (
-	"fmt"
 	"log/slog"
 	"os"
-	"strings"
 
 	"github.com/nielsvanm/dove/commands"
 	"github.com/urfave/cli/v2"
@@ -42,10 +40,8 @@ const toolArt = `
         ,--'
 `
 
-
 const (
-  DOVE_CFG_FILE_NAME = ".dovecfg"
-  CLI_ERR_INVALID_ARGUMENT = 1
+	CLI_ERR_INVALID_ARGUMENT = 1
 )
 
 func main() {
@@ -71,8 +67,8 @@ func main() {
 			{
 				Name:        "init",
 				Description: "Initializes the local directory with a dove config",
-				Args:        true, 
-        Flags: []cli.Flag{
+				Args:        true,
+				Flags: []cli.Flag{
 					&cli.BoolFlag{
 						Name:    "force",
 						Usage:   "Forces the init process even though a dove config is already pressent",
@@ -80,29 +76,17 @@ func main() {
 					},
 				},
 				Action: func(ctx *cli.Context) error {
-					targetPath := ctx.Args().Get(0)
-          if len(targetPath) == 0 {
-            targetPath = "./" + DOVE_CFG_FILE_NAME
-          }
-
-
-          if !strings.HasSuffix(targetPath, DOVE_CFG_FILE_NAME) {
-            if !strings.HasSuffix(targetPath, "/")  {
-              targetPath += "/"
-            }
-            targetPath += DOVE_CFG_FILE_NAME
-          }
-
-          force := ctx.Bool("force")
-          fmt.Println(targetPath)
-
-          return commands.InitConfigCommand(targetPath, force)
+          targetPath, force := commands.ProcessInitArguments(ctx)
+					return commands.InitConfigCommand(targetPath, force)
 				},
 			},
 			{
 				Name:        "start",
-				Description: "Starts the dev services defined in the dovecfg.toml",
+				Description: "Starts the dev services defined in the dove config",
 				Aliases:     []string{"dev", "d", "s"},
+				Action: func(ctx *cli.Context) error {
+					return nil
+				},
 			},
 		},
 	}
@@ -111,3 +95,4 @@ func main() {
 		slog.Error("Application exited with error", "err", err)
 	}
 }
+
